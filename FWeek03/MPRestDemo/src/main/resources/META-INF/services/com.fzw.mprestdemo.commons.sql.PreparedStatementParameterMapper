@@ -1,0 +1,4 @@
+com.fzw.mprestdemo.commons.sql.BooleanPreparedStatementParameterMapper
+com.fzw.mprestdemo.commons.sql.IntegerPreparedStatementParameterMapper
+com.fzw.mprestdemo.commons.sql.LongPreparedStatementParameterMapper
+com.fzw.mprestdemo.commons.sql.ReflectivePreparedStatementParameterMapper

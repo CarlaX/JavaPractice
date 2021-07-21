@@ -1,0 +1,3 @@
+com.fzw.mprestdemo.rest.microprofile.rest.uri.PathParamUriBuilderAssembler
+com.fzw.mprestdemo.rest.microprofile.rest.uri.QueryParamUriBuilderAssembler
+com.fzw.mprestdemo.rest.microprofile.rest.uri.MatrixParamUriBuilderAssembler
