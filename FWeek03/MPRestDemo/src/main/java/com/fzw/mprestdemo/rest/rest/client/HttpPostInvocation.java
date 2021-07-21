@@ -56,6 +56,7 @@ class HttpPostInvocation implements Invocation {
 
     private final MultivaluedMap<String, Object> headers;
 
+    //    post请求体
     private Entity<?> entity;
 
     private final ObjectMapper objectMapper;
@@ -81,16 +82,21 @@ class HttpPostInvocation implements Invocation {
     public Response invoke() {
         try {
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+//            设置post方法
             connection.setRequestMethod(HttpMethod.POST);
+//            设置connection允许读写
             connection.setDoInput(true);
             connection.setDoOutput(true);
             this.setRequestHeaders(connection);
             if (this.entity != null) {
                 MediaType mediaType = this.entity.getMediaType();
+//                如果是json数据
                 if (MediaType.APPLICATION_JSON_TYPE.equals(mediaType)) {
                     Object obj = this.entity.getEntity();
+//                    序列化为字节数组
                     byte[] body = objectMapper.writeValueAsBytes(obj);
                     try (OutputStream outputStream = connection.getOutputStream();) {
+//                        写入
                         outputStream.write(body);
                         outputStream.flush();
                     } catch (Exception e) {
@@ -124,6 +130,7 @@ class HttpPostInvocation implements Invocation {
     public <T> T invoke(Class<T> responseType) {
         Response response = invoke();
         MediaType mediaType = response.getMediaType();
+//        如果是json响应，则反序列化
         if (MediaType.APPLICATION_JSON_TYPE.equals(mediaType)) {
             String entity = response.readEntity(String.class);
             try {
@@ -139,10 +146,10 @@ class HttpPostInvocation implements Invocation {
     public <T> T invoke(GenericType<T> responseType) {
         Response response = invoke();
         MediaType mediaType = response.getMediaType();
+//        如果是json响应，则反序列化
         if (MediaType.APPLICATION_JSON_TYPE.equals(mediaType)) {
             String entity = response.readEntity(String.class);
             try {
-                Class<?> rawType = responseType.getRawType();
                 return this.objectMapper.readValue(entity, new TypeReference<>() {
                 });
             } catch (JsonProcessingException e) {

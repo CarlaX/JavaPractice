@@ -12,6 +12,7 @@ import java.util.Map;
 @Path("/actuator")
 public interface ActuatorService {
 
+    //    actuator响应，用map接收json数据
     @GET
     @Path("/")
     public Map actuator();
